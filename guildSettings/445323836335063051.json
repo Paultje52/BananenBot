@@ -1,0 +1,32 @@
+{
+	"information": {
+		"name": "🎵SoundHosting🎵",
+		"id": "445323836335063051",
+		"channels": "1",
+		"users": "6",
+		"createdat": "Sun May 13 2018 22:37:56 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "7",
+		"ownerid": "264019795282886656"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

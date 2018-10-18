@@ -1,0 +1,32 @@
+{
+	"information": {
+		"name": "JustJoran Development",
+		"id": "470260353951858689",
+		"channels": "50",
+		"users": "19",
+		"createdat": "Sat Jul 21 2018 18:06:45 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "19",
+		"ownerid": "326071090893815809"
+	},
+	"prefix": "&",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "<@&470260773579653134>"
+	}
+}

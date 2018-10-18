@@ -1,0 +1,32 @@
+{
+	"information": {
+		"name": "TryFor Creators",
+		"id": "438611588392550401",
+		"channels": "30",
+		"users": "29",
+		"createdat": "Wed Apr 25 2018 10:05:51 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "30",
+		"ownerid": "300557544173076480"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

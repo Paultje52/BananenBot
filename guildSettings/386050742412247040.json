@@ -1,0 +1,32 @@
+{
+	"information": {
+		"name": "gewoongames",
+		"id": "386050742412247040",
+		"channels": "6",
+		"users": "5",
+		"createdat": "Fri Dec 01 2017 08:07:49 GMT+0100 (CET)",
+		"region": "eu-central",
+		"roles": "5",
+		"ownerid": "345154522072481792"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"information": {
+		"invite": "https://discord.gg/2wrR78X",
+		"name": "📝TestServer🖊",
+		"id": "425643727953068042",
+		"channels": "10",
+		"users": "5",
+		"createdat": "Tue Mar 20 2018 14:16:12 GMT+0100 (West-Europa (standaardtijd))",
+		"region": "eu-west",
+		"roles": "4",
+		"ownerid": "327462385361092621"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "<@&455294081799815171>"
+	}
+}

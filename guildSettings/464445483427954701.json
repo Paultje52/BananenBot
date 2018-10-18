@@ -1,0 +1,33 @@
+{
+	"information": {
+		"name": "Overloaded",
+		"id": "464445483427954701",
+		"channels": "32",
+		"users": "35",
+		"createdat": "Thu Jul 05 2018 17:00:32 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "17",
+		"ownerid": "405391811222437890",
+		"invite": "https://discord.gg/wCbSFDC"
+	},
+	"prefix": "!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "<@&464461211820490754>"
+	}
+}

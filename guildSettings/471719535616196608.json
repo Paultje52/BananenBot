@@ -1,0 +1,32 @@
+{
+	"information": {
+		"name": "👑 | Wortel Community",
+		"id": "471719535616196608",
+		"channels": "25",
+		"users": "10",
+		"createdat": "Wed Jul 25 2018 18:45:01 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "13",
+		"ownerid": "447404763106246657"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

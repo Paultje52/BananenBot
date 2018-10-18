@@ -1,0 +1,33 @@
+{
+	"information": {
+		"name": "DutchDaj-Gaming",
+		"id": "437189416575041546",
+		"channels": "37",
+		"users": "16",
+		"createdat": "Sat Apr 21 2018 11:54:39 GMT+0200 (CEST)",
+		"region": "eu-west",
+		"roles": "32",
+		"ownerid": "393496779745656835",
+		"invite": "https://discord.gg/YeS7TaH"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"information": {
+		"name": "Code Minute",
+		"id": "448887372944506882",
+		"channels": "44",
+		"users": "36",
+		"createdat": "Wed May 23 2018 18:38:09 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "28",
+		"ownerid": "259776081316282368",
+		"invite": "https://discord.gg/pJBXJda"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

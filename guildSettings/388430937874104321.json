@@ -1,0 +1,33 @@
+{
+	"information": {
+		"name": "BrianWeenkGames",
+		"id": "388430937874104321",
+		"channels": "61",
+		"users": "113",
+		"createdat": "Thu Dec 07 2017 21:45:52 GMT+0100 (CET)",
+		"region": "eu-central",
+		"roles": "55",
+		"ownerid": "345120440517132288",
+		"invite": "https://discord.gg/se9yEs2"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "<@&388435783851180032>"
+	}
+}

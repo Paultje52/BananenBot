@@ -1,0 +1,33 @@
+{
+	"information": {
+		"name": "Liefdestherapie",
+		"id": "421033713803984896",
+		"channels": "33",
+		"users": "30",
+		"createdat": "Wed Mar 07 2018 20:57:39 GMT+0100 (CET)",
+		"region": "eu-west",
+		"roles": "22",
+		"ownerid": "335477622706274305",
+		"invite": "https://discord.gg/QEbdr3S"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

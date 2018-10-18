@@ -1,0 +1,32 @@
+{
+	"information": {
+		"name": "CN Community",
+		"id": "352777899738267649",
+		"channels": "69",
+		"users": "229",
+		"createdat": "Thu Aug 31 2017 13:33:25 GMT+0200 (CEST)",
+		"region": "eu-central",
+		"roles": "52",
+		"ownerid": "254266381841858571"
+	},
+	"prefix": "!!",
+	"color": "none",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "admin"
+	}
+}

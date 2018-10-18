@@ -1,0 +1,33 @@
+{
+	"information": {
+		"name": "power gamingNL",
+		"id": "285398417226596353",
+		"channels": "40",
+		"users": "26",
+		"createdat": "Sun Feb 26 2017 14:11:25 GMT+0100 (CET)",
+		"region": "eu-west",
+		"roles": "24",
+		"ownerid": "276349700951769090",
+		"invite": "https://discord.gg/qxR5Rkj"
+	},
+	"prefix": "!",
+	"color": "#c4272f",
+	"thumbnail": "none",
+	"plugin": {
+		"main": "true",
+		"fun": "true",
+		"moderator": "true"
+	},
+	"pluginview": {
+		"main": ":white_check_mark:",
+		"fun": ":white_check_mark:",
+		"moderator": ":white_check_mark:"
+	},
+	"role": {
+		"member": "member",
+		"dj": "dj",
+		"color": "color",
+		"moderator": "moderator",
+		"admin": "<@&321285711938715649>"
+	}
+}
