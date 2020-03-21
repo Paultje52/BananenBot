@@ -1,97 +1,139 @@
-const Discord = require("discord.js");
-exports.run = async (client) => {
-  const permChecker = require(`${client.dirname}/custom_modules/permChecker`);
-  let data = client.data;
-  let config = client.config;
-  let message = client.message;
-  let args = client.args;
-  let capitalizeFirstLetter = client.function.capitalizeFirstLetter;
-  let cmds = "";
-  let i;
-  let prefix;
-  if (client.guild === false) prefix = config.main.prefix;
-  else prefix = data.get("prefix");
-  if (!args[0]) {
-    let cmdDingen = {};
-    cmdDingen.name = {};
-    cmdDingen.data = {};
-    cmdDingen.overige = [];
-    await client.commands.forEach(async (command) => {
-      client.message = message;
-      client.cmd = command;
-      let value = await permChecker.check("help", client);
-      if (value !== true) return;
-      cmdDingen.name[command.help.category] = command.help.category;
-      if (!cmdDingen.data[command.help.category]) {
-        cmdDingen.data[command.help.category] = `\`${prefix}${command.help.name}\`\n`;
-        cmdDingen.overige.push(command.help.category);
-      } else {
-        cmdDingen.data[command.help.category] += `\`${prefix}${command.help.name}\`\n`;
-      }
+const command = require("bananenbase").command;
+
+module.exports = class Main extends command {
+  constructor(client) {
+    super(client, {
+      name: "help",
+      description: "Bekijk alle commands of krijg hulp met de commands!",
+      category: "Main",
+      subCommands: ["h", "?", "he"],
+      args: ["Category or command: optional"]
     });
-    let embed = new Discord.RichEmbed().setTitle("Help").setDescription(`**${client.commands.size}** commands in **${cmdDingen.overige.length}** categorieën!`).setFooter(`${prefix}help <command/plugin> voor specefieke hulp!`);
-    for (i = 0; i < Object.keys(cmdDingen.data).length; i++) {
-      if (cmdDingen.overige[i] === "fun" && data.get("plugin.fun") === "false") {
-      } else if (cmdDingen.overige[i] === "main" && data.get("plugin.main") === "false") {
-        embed.addField(`__Main__`, `\`${prefix}help\`\n\`${prefix}invite\``, true);
-      } else {
-        let name = await capitalizeFirstLetter.run(client, cmdDingen.overige[i]);
-        let commands = await capitalizeFirstLetter.run(client, cmdDingen.data[cmdDingen.overige[i]]);
-        if (commands === false) return;
-        embed.addField(`__${name}__`, commands, true);
-      }
-    }
-    if (data) {
-      if (data.get("color") !== "none") embed.setColor(data.get("color"));
-      else embed.setColor("#36393e");
-      if (data.get("thumbnail") !== "none" && data.get("thumbnail").startsWith("http" || "https")) embed.setThumbnail(data.get("thumbnail"));
-    } else embed.setColor("#36393e");
-    message.channel.send(embed);
-  } else {
-    let cmd = client.commands.get(args[0]);
-    if (cmd === undefined) cmd = client.subCommands.get(args[0]);
-    if (cmd) {
-      for (i = 0; i < cmd.help.extraCommands.length; i++) {
-        cmds += `**- **\`${cmd.help.extraCommands[i]}\`\n`;
-      }
-      let embed = new Discord.RichEmbed().setTitle("Help");
-      if (cmd.help.extraCommands.length === 0) embed.setDescription(`**<>** is verpicht. **[]** is optioneel.\nHelp voor het command **${args[0]}**:\n**Naam:** ${cmd.help.name}\n**Gebruik:** \`${prefix}${cmd.help.usage}\`\n**Beschrijving:** ${cmd.help.description}\n**Categorie:** ${cmd.help.category}\n**Geen extra commands!**`);
-      else embed.setDescription(`**<>** is verpicht. **[]** is optioneel.\nHelp voor het command **${args[0]}**:\n**Naam:** ${cmd.help.name}\n**Gebruik:** \`${prefix}${cmd.help.usage}\`\n**Beschrijving:** ${cmd.help.description}\n**Categorie:** ${cmd.help.category}\n**Extra commands (${cmd.help.extraCommands.length}):** \n${cmds}`);
-      if (data) {
-        if (data.get("color") !== "none") embed.setColor(data.get("color"));
-        else embed.setColor("#36393e");
-        if (data.get("thumbnail") !== "none" && data.get("thumbnail").startsWith("http" || "https")) embed.setThumbnail(data.get("thumbnail"));
-      } else embed.setColor("#36393e");
-      message.channel.send(embed);
-    } else {
-      await client.commands.filter(c => args[0].toLowerCase() === c.help.category.toLowerCase()).forEach(async (command) => {
-        client.message = message;
-        client.cmd = command;
-        let value = await permChecker.check("help", client);
-        if (value !== true) return;
-        cmds += `\`${prefix}${command.help.usage}\` - **${command.help.description}**\n`;
+  }
+
+  async run(message, args) {
+    if (!args[0]) {
+      let cmd = {data: {}, names: []};
+      await this.client.commands.forEach(async (command) => {
+        if (command.enabled) {
+          let result = await command.check(args, message, this.client);
+          if (result) {
+            let usage = `${message.guild.settings.prefix}${command.help.name}`;
+            if (!command.help.category) command.help.category = "Geen categorie";
+            if (!cmd.data[command.help.category]) {
+              cmd.data[command.help.category] = `\`${usage}\`\n`;
+              cmd.names.push(command.help.category);
+            } else cmd.data[command.help.category] += `\`${usage}\`\n`;
+          }
+        }
       });
-      if (cmds === "") return message.reply("geen command/category gevonden!");
-      let embed = new Discord.RichEmbed().setTitle("Help").setDescription(`**<>** is verpicht. **[]** is optioneel.\nHelp voor de categorie **${args[0]}**:\n\n${cmds}`);
-      if (data) {
-        if (data.get("color") !== "none") embed.setColor(data.get("color"));
-        else embed.setColor("#36393e");
-        if (data.get("thumbnail") !== "none" && data.get("thumbnail").startsWith("http" || "https")) embed.setThumbnail(data.get("thumbnail"));
-      } else embed.setColor("#36393e");
-      message.channel.send(embed);
+      let total = [];
+      this.client.commands.forEach(command => {
+        if (!total.includes(command.help.category)) total.push(command.help.category);
+      })
+      let embed = message.embed()
+        .setTitle("Help")
+        .setColor("#d60000")
+        .setDescription("Elk command is hieronder weergegeven.");
+      let interval = setInterval(() => {
+        if (total.length === cmd.names.length) {
+          clearInterval(interval);
+          cmd.names.forEach(category => {
+            embed.addField(`__**${category}**__`, cmd.data[category], true);
+          });
+          message.channel.send(embed);
+        }
+      });
+    } else {
+      let categories = [];
+      this.client.commands.forEach(async (command) => {
+        if (command.enabled) {
+          let result = await command.check(args, message, this.client);
+          if (result) {
+            if (!categories.includes(command.help.category.toLowerCase())) categories.push(command.help.category.toLowerCase());
+          }
+        }
+      });
+      let total = [];
+      this.client.commands.forEach(command => {
+        if (!total.includes(command.help.category)) total.push(command.help.category);
+      });
+      let interval = setInterval(() => {
+        if (total.length === categories.length) {
+          clearInterval(interval);
+          if (categories.includes(args.join(" ").toLowerCase())) {
+            let commands = "";
+            let t = [];
+            this.client.commands.forEach(async (command) => {
+              if (!command.enabled) return;
+              let result = await command.check(args, message, this.client);
+              if (!result) return;
+              if (command.help.category.toLowerCase() !== args.join(" ").toLowerCase()) return;
+              commands += `\`${message.guild.settings.prefix}${command.help.name}`;
+              if (command.help.args) {
+                command.help.args.forEach(arg => {
+                  let type = arg.split(": ")[1];
+                  if (type === "required") commands += ` <${arg.split(":")[0]}>`;
+                  else if (type === "optional") commands += ` [${arg.split(":")[0]}]`;
+                });
+              }
+              commands += `\` - **${command.help.description.replace("%PREFIX%", message.guild.settings.prefix)}**\n`;
+              t.push(command.help.name);
+            });
+            total = [];
+            this.client.commands.forEach(command => {
+              if (!total.includes(command.help.name) && command.help.category.toLowerCase() === args.join(" ").toLowerCase()) total.push(command.help.name);
+            });
+            interval = setInterval(() => {
+              if (total.length === t.length) {
+                clearInterval(interval);
+                message.channel.send(message.embed()
+                  .setTitle(`Help: ${args[0].toLowerCase()}`)
+                  .setColor("#d60000")
+                  .setDescription(`Alles met **[]** is verplicht.\nAlles met **[]** is optioneel.\n\n${commands}`)
+                );
+              }
+            });
+          } else {
+            let done = false;
+            let t = 0;
+            this.client.commands.forEach(async (command) => {
+              if (!command.enabled) return t++;
+              let result = await command.check(args, message, this.client);
+              if (!result) return t++;
+              if (command.help.name.toLowerCase() !== args[0].toLowerCase()) return t++;
+              done = true;
+              t++;
+              let usage = message.guild.settings.prefix + command.help.name;
+              if (command.help.args) {
+                command.help.args.forEach(arg => {
+                  let type = arg.split(": ")[1];
+                  if (type === "required") usage += ` <${arg.split(":")[0]}>`;
+                  else if (type === "optional") usage += ` [${arg.split(":")[0]}]`;
+                });
+              }
+              let subCommands;
+              if (command.help.subCommands.length > 0) {
+                subCommands = `**Subcommands (${command.help.subCommands.length}):**\n`;
+                command.help.subCommands.forEach(subCommand => {
+                  subCommands += ` - **${subCommand}**\n`;
+                });
+              } else subCommands = "Not subcommands!";
+              message.channel.send(message.embed()
+                .setTitle(`Help: ${args[0].toLowerCase()}`)
+                .setColor("#d60000")
+                .setDescription(`**Naam:** ${command.help.name}\n**Beschrijving:** ${command.help.description.replace("%PREFIX%", message.guild.settings.prefix)}\n**Categorie:** ${command.help.category}\n**Gebruik:** \`${usage}\`\n${subCommands}`)
+              );
+            });
+            interval = setInterval(() => {
+              if (this.client.commands.size === t) {
+                clearInterval(interval);
+                if (!done) return message.reply("command/categorie niet gevonden!");
+              }
+            });
+          }
+        }
+      });
     }
   }
-}
-exports.help = {
-  name: "help",
-  usage: "help <command>",
-  description: "Krijg hulp met de bot!",
-  category: "main",
-  extraCommands: ["?"]
-}
-exports.config = {
-  enable: true,
-  guildPermission: 0,
-  userPermission: 0,
-  guildOnly: false
 }

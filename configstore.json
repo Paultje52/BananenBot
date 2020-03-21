@@ -1,0 +1,59 @@
+{
+	"guild-393475468508004364": {
+		"embed": {
+			"color": "#34363c",
+			"footerText": "© BananenBot",
+			"footerImage": "BOTAVATAR",
+			"time": true
+		},
+		"prefix": "!",
+		"dj": "dj"
+	},
+	"author-327462385361092621": {
+		"balance": 706,
+		"next": {
+			"steal": 154439693254
+		},
+		"buildings": {},
+		"perMinute": 0,
+		"lastMoneyGive": 1584437702750
+	},
+	"users": [
+		"author-327462385361092621",
+		"author-331030479161655296",
+		"author-279635115435360266"
+	],
+	"guild-user": [
+		"guild-393475468508004364-author-327462385361092621",
+		"guild-393475468508004364-author-331030479161655296",
+		"guild-393475468508004364-author-279635115435360266"
+	],
+	"guilds": [
+		"guild-393475468508004364"
+	],
+	"author-331030479161655296": {
+		"balance": 856,
+		"next": {
+			"steal": 1584439693254
+		},
+		"buildings": {},
+		"perMinute": 0,
+		"lastMoneyGive": 1584437702750,
+		"economy": {
+			"balance": 1150,
+			"next": {},
+			"buildings": {},
+			"perMinute": 0,
+			"lastMoneyGive": 1584437893262
+		}
+	},
+	"author-279635115435360266": {
+		"balance": 1011,
+		"next": {
+			"search": 1584439553686
+		},
+		"buildings": {},
+		"perMinute": 0,
+		"lastMoneyGive": 1584437702750
+	}
+}

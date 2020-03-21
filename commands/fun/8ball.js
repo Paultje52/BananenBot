@@ -1,39 +1,58 @@
-const Discord = require("discord.js");
-const chalk = require("chalk");
-exports.run = async (client) => {
-  let data = client.data;
-  let config = client.config;
-  let message = client.message;
-  let args = client.args;
-  if (data.get(`plugin.fun`) !== "true") return console.log(`${chalk.red(client.cmd.help.name)} staat uit voor ${chalk.cyan(message.guild.name)}!`);
-  if (!args[0] || !args[1] || !args[2]) {
-    let embed = new Discord.RichEmbed().setTitle("8ball").setDescription("Error: Geef een vraag op van minimaal 3 woorden!");
-    if (data) {
-      if (data.get("color") !== "none") embed.setColor(data.get("color"));
-      else embed.setColor("#36393e");
-      if (data.get("thumbnail") !== "none" && data.get("thumbnail").startsWith("http" || "https")) embed.setThumbnail(data.get("thumbnail"));
-    } else embed.setColor("#36393e");
-    return message.channel.send(embed);
+const command = require("bananenbase").command;
+
+module.exports = class ball extends command {
+  constructor(client) {
+    super(client, {
+      name: "8ball",
+      description: "Stel een vraag aan mij!",
+      category: "Fun",
+      subCommands: ["8bal"],
+      args: ["vraag: required"]
+    });
   }
-  let antwoorden = ["Zeker weten!", "Ja", "Yes", "Ja zeker!", "Ik denk het", "Misschien", "Ik denk het niet", "Nee", "Nope", "Zeker weten niet!"];
-  let embed = new Discord.RichEmbed().setTitle("8ball").setAuthor(args.join(" ")).setDescription(antwoorden[Math.floor(Math.random() * antwoorden.length)]);
-  if (data) {
-    if (data.get("color") !== "none") embed.setColor(data.get("color"));
-    else embed.setColor("#36393e");
-    if (data.get("thumbnail") !== "none" && data.get("thumbnail").startsWith("http" || "https")) embed.setThumbnail(data.get("thumbnail"));
-  } else embed.setColor("#36393e");
-  message.channel.send(embed);
-}
-exports.help = {
-  name: "8ball",
-  usage: "8ball <vraag>",
-  description: "Vraag iets aan de bot!",
-  category: "fun",
-  extraCommands: ["vraag"]
-}
-exports.config = {
-  enable: true,
-  guildPermission: 0,
-  userPermission: 0,
-  guildOnly: false
+
+  async run(message, args) {
+    if (!args[0]) return message.error("Je hebt geen vraag gestelt!");
+    let answers = [
+      // Ja
+      "Het is zeker",
+      "Jesse zegt van wel",
+      "Ja maar, ehmm, ja...",
+      "Er wordt \"JA\" geroepen vanuit de ruimte...",
+      "Het is beslist zo",
+      "Zonder twijfel",
+      "Zeer zeker",
+      "Je kunt er op vertrouwen",
+      "Volgens mij wel",
+      "Zeer waarschijnlijk",
+      "Goed vooruitzicht",
+      "Ja",
+      "Alles wijst naar een ja",
+      
+      // Neutraal
+      "Probeer opnieuw",
+      "Vraag het later nog een keer",
+      "Niet te voorspellen",
+      ":zzz: Wat!? Kan je de vraag opnieuw stellen, ik lag weer te slapen...",
+      
+      // Nee
+      "Reken er niet op",
+      "Reken er maar niet op",
+      "Ik denk van niet",
+      "Nope",
+      "No!!!",
+      "Ik denk toch nee",
+      "Mijn bronnen zeggen nee",
+      "Het vooruitzicht zegt van niet",
+      "Het vooruitzicht is niet zo goed",
+      "Ik zou er niet aan denken! Doe maar niet.",
+      "NEIN!!!"
+    ];
+
+    message.channel.send(message.embed()
+      .setTitle("8ball")
+      .setColor("#f6ff00")
+      .setDescription(answers[Math.floor(Math.random() * answers.length)])
+    );
+  }
 }

@@ -1,62 +1,98 @@
-//Eerst zeggen wij in de console dat we gaan opstarten. Ook zetten we de variable 'start' naar de datum dat het op het moment dat de bot wordt gerunt is!
-console.log("Ik start op!");
-let start = Date.now();
+const BananenBase = require("bananenbase");
+global.emojis = {
+  buildings: ["🎄", "🌳", "🌴", "🛁", "🛏️", "🏠", "🏚️", "🏡", "🗿", "🏦", "🏟️", "⛰️", "🏗️", "🏛️"]
+};
 
-//Nu gaan we de packages inladen!
-const Discord = require("discord.js"),
-      consoleCommands = require("./consoleCommands.js"),
-      loader = require("./custom_modules/loader"),
-      dataModule = require("./custom_modules/data");
+new BananenBase({
+  clientSettings: {
+    disabledEvents: ["PRESENCE_UPDATE", "TYPING_START"],
+    disableEveryone: true,
+    messageCacheMaxSize: 100,
+    messageCacheLifetime: 240,
+    messageSweepInterval: 300,
+    autoReconnect: true
+  },
+  token: "TOKEN",
+  botConfig: {
+    guildSettings: {
+      embed: {
+        color: "#34363c",
+        footerText: "© BananenBot",
+        footerImage: "BOTAVATAR",
+        time: true
+      },
+      prefix: "!",
+      dj: "dj"
+    },
+    authorSettings: {
+      balance: 1000,
+      next: {},
+      buildings: {},
+      perMinute: 0,
+      lastMoneyGive: Date.now()
+    },
+    botOwners: ["327462385361092621"]
+  },
+  keepTrackOfDatabase: true,
+  database: {
+    package: "keyv",
+    name: "storage.json",
+    type: "sqlite",
+    code: `${process.cwd()}/database.sqlite`
+  },
+  permissionLevels: [
+    (client, message, args) => { // Permission level 0
+      return true;
+      // return message.channel.name.toLowerCase().includes("bot") || message.channel.parent.name.toLowerCase().includes("staff") || message.channel.parent.name.toLowerCase().includes("ticket") || message.channel.name.toLowerCase().includes("meme");
+    }, (client, message, args) => { // Permission level 1
+      if (message.member.roles.some(r => ["「」Moderator", "mod", "Mod", "noAutoMod"].includes(r.name))) return true;
+      return false;
+    }, (client, message, args) => { // Permission level 2
+      if (message.member.roles.some(r => ["Giveaway", "giveaway", "admin"].includes(r.name)) || message.member.roles.some(r => r.name.toLowerCase().includes("staff") || r.name.toLowerCase().includes("developer"))) return true;
+      return false;
+    }, (client, message, args) => { // Permission level 3
+      if (client.config.botOwners.includes(message.author.id)) return true; // A bot owner
+      else return false; // No bot owner
+    }
+  ],
+  ignore: {
+    pm: true
+  },
+  language: "NL",
+  bot: async (client) => {
+    if (await client.db.get("restart")) {
+      let restart = await client.db.get("restart");
+      let channel = client.channels.find("id", restart.channel);
+      let message = await channel.fetchMessage(restart.message);
+      await client.db.delete("restart");
+      console.log(`Bot successfull restarted! Took ${(Date.now()-restart.date)/1000} seconds.`);
+      message.edit(`Restart compleat: took **${(Date.now()-restart.date)/1000} seconds**.`);
+    }
 
-//Ook maken wij de discord client aan en maken we een command variable!
-const client = new Discord.Client({autoReconnect: true});
-client.commands = new Discord.Collection();
-client.subCommands = new Discord.Collection();
-client.functions = new Discord.Collection();
+    setInterval(() => {
+      client.user.setPresence({ game: { name: `op ${client.guilds.size} servers`, type: "playing"}}); 
+    }, 15000);
+    calculateLeaderboard(client)
+  }
+});
 
-//En dan nu de variables in client, zodat de bot sneller is en alle variables worden meegenomen!
-client.queue = {}; //Queue
-client.dataModule = dataModule; //Datamodule
-client.start = start; //Start
-client.data = undefined; //Data
-client.dirname = __dirname; //Dirname
-client.startType = "startup"; //Start type
-client.guildPermission1 = ["362871251221610496", "361922496460488705", "285398417226596353"]; //Premium servers
-client.guildPermission2 = []; //Beta servers
-client.guildPermission3 = ["448887372944506882", "419908422109102080", "456477444027711488", "451016023827677194", "394856513765769216"]; //Developer servers
-client.guildPermission4 = ["393475468508004364", "446381065867755522"]; //Officiële servers
-client.guildPermission5 = ["425643727953068042"]; //Test servers
-client.version = "3.0.5"; //Versie
-client.plugins = 2; //Aantal plugins
-client.rollen = 5; //Aantal rollen die er bestaan voor settings
-
-//We laden de console commands in!
-consoleCommands.run(client);
-
-//We hebben ook events, die worden hier goed uitgevoerd!
-loader.load("event", client);
-
-//Nu laden wij de commands in!
-setTimeout(function() {
-  loader.load("command", client);
-}, 1000);
-
-//Als je een nodejs app runt, heb je ook process events, zoals 'exit'. Die worden er hier gebruikt!
-setTimeout(function() {
-  loader.load("process_event", client);
-}, 2000);
-
-//Je kan ook functies aanmaken die je overal kan gebruiken met 'client.FUNCTIENAAM.run(client)'!
-setTimeout(function() {
-  loader.load("function", client);
-}, 3000);
-
-//Als je meerdere configs wilt hebben, gaat dat ook!
-setTimeout(function() {
-  loader.load("config", client);
-}, 4000);
-
-//Als alles gedaan is, start de bot op!
-setTimeout(function() {
-  client.login(client.config.main.token);
-}, 5000);
+function calculateLeaderboard(client) {
+  let users = [];
+  let done = 0;
+  client.users.forEach(async (user) => {
+    if (!user.settings) user.settings = await client.db.get(`author-${user.id}`);
+    if (user.settings) {
+      if (!user.settings.balance) user.settings.balance = client.config.authorSettings;
+      users.push(user);
+    }
+    done++;
+  });
+  let i = setInterval(() => {
+    if (done !== client.users.size) return;
+    clearInterval(i);
+    global.leaderboard = users.sort((a, b) => b.settings.balance-a.settings.balance).splice(0, 10);
+    setTimeout(() => {
+      calculateLeaderboard(client);
+    }, 1000);
+  });
+}
